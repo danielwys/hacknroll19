@@ -28,28 +28,31 @@ let fault_photo = ''
 let fault_photo_id = ''
 let fault_desc = ''
 let fault_loc = ''
+let reportKey = ''
 
 //will someone explain to me what composer does (should be decide when to move to next step)
 const stepHandler = new Composer()
 stepHandler.action('next', (ctx) => {
+      // assignment oprs at every block to store data
+      user_ID = ctx.from.id
+      ctx.reply('Starting a new report! Please enter your fullname: ')
   return ctx.wizard.next()
 })
 
 const superWizard = new WizardScene('super-wizard',
   //when bot first starts
   (ctx) => {
-    ctx.reply('Hello! I am NUS Reporting Bot! How can I help you today?', Markup.inlineKeyboard([
+    ctx.reply('Hello! I am NUS Reporting Bot! How can I help you today?', 
+    Markup.inlineKeyboard([
       Markup.callbackButton('Report fault', 'next'),
     ]).extra())
     return ctx.wizard.next()
   },
   stepHandler,
-  (ctx) => {
-    // assignment oprs at every block to store data
-    user_ID = ctx.from.id
-    ctx.reply('Starting a new report! Please enter your fullname: ')
-    return ctx.wizard.next()
-  },
+  // (ctx) => {
+
+  //   return ctx.wizard.next()
+  // },
   (ctx) => {
     user_name = ctx.message.text
     ctx.reply('Hello ' + user_name + '! Please enter your matriculation number: ')
@@ -106,6 +109,7 @@ const superWizard = new WizardScene('super-wizard',
         fault_desc: [fault_desc],
         fault_loc: [fault_loc]
       });
+      reportKey = report.key;
     return ctx.scene.leave()
   }
 )
