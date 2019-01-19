@@ -28,6 +28,7 @@ let fault_photo = ''
 let fault_photo_id = ''
 let fault_desc = ''
 let fault_loc = ''
+let reportKey = ''
 
 //will someone explain to me what composer does (should be decide when to move to next step)
 const stepHandler = new Composer()
@@ -106,6 +107,7 @@ const superWizard = new WizardScene('super-wizard',
         fault_desc: [fault_desc],
         fault_loc: [fault_loc]
       });
+      reportKey = report.key;
     return ctx.scene.leave()
   }
 )
