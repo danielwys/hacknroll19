@@ -5,9 +5,20 @@ const Stage = require('telegraf/stage')
 const Markup = require('telegraf/markup')
 const WizardScene = require('telegraf/scenes/wizard')
 
+var admin = require("firebase-admin");
+var serviceAccount = require("./serviceAccountKey.json");
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://hacknroll19.firebaseio.com"
+});
+
+var db = admin.database();
+var reportRef = db.ref("reports");
+
 var name ='';
 var matric = '';
 var loc = '';
+var problem = '';
 
 
 const stepHandler = new Composer()
@@ -42,7 +53,7 @@ const superWizard = new WizardScene('super-wizard',
     return ctx.wizard.next()
   },
   (ctx) => {
-      matric = ctx.message.text
+    matric = ctx.message.text
     ctx.reply('Please select the location of report: ',
         Markup.keyboard([
             Markup.callbackButton("BIZ"),
@@ -55,22 +66,28 @@ const superWizard = new WizardScene('super-wizard',
     return ctx.wizard.next()
   },
   (ctx) => {
-      loc = ctx.message.text
+    loc = ctx.message.text
+    ctx.reply('Please enter some details regarding the location, as well as a short description on what is wrong: ')
+    return ctx.wizard.next()
+  },
+  (ctx) => {
+      problem = ctx.message.text
     ctx.reply('Please attach a photo of the fault')
     //last scene --> leaving the wizard loop
     return ctx.wizard.next()
   },
   (ctx) => {
-      ctx.reply(("Please check the details: \n" +
-                "Name: " + name + "\n" +
-                "Matriculation number: " + matric + "\n" +
-                "Location: " + loc),
-            Markup.keyboard([
-                Markup.callbackButton("Yes"),
-                Markup.callbackButton("No")
-            ]).extra()
-      )
-      return ctx.wizard.next()
+    ctx.reply(("Please check the details: \n" +
+              "Name: " + name + "\n" +
+              "Matriculation number: " + matric + "\n" +
+              "Location: " + loc + "\n" +
+              "Description: " + problem),
+          Markup.keyboard([
+              Markup.callbackButton("Yes"),
+              Markup.callbackButton("No")
+          ]).extra()
+    )
+    return ctx.wizard.next()
   },
   (ctx) => {
       ctx.reply("Thank you for the report.")
