@@ -72,13 +72,16 @@ const superWizard = new WizardScene('super-wizard',
   (ctx) => {
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
-        Markup.keyboard([ //Need to add more locations
-            Markup.callbackButton("BIZ"),
-            Markup.callbackButton("FASS"),
-            Markup.callbackButton("COMPUTING"),
-            Markup.callbackButton("MED"),
-            Markup.callbackButton("SCI")
-        ]).extra()
+        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).extra()
+
+        // Markup.inlinekeyboard([ //Need to add more locations
+        //     Markup.callbackButton("BIZ"),
+        //     Markup.callbackButton("FASS"),
+        //     Markup.callbackButton("COMPUTING"),
+        //     Markup.callbackButton("MED"),
+        //     Markup.callbackButton("SCI")
+        // ]).oneTime()
+        // .extra()
     )
     return ctx.wizard.next()
   },
@@ -89,15 +92,31 @@ const superWizard = new WizardScene('super-wizard',
               "Name: " + user_name + "\n" +
               "Matriculation number: " + user_matric + "\n" +
               "Location: " + fault_loc + "\n" +
-              "Description: " + fault_desc},
-          Markup.keyboard([ //Need to find way to edit if wrong
-              Markup.callbackButton("Yes"),
-              Markup.callbackButton("No")
-          ]).extra()
+              "Description: " + fault_desc + "\n" +
+              "Please type Yes if correct and No if not."},
+    Markup.keyboard([ //Need to find way to edit if wrong
+                Markup.callbackButton("Yes"),
+                Markup.callbackButton("No")
+                ]).extra()
     )
-    return ctx.wizard.next()
+      return ctx.wizard.next()
   },
+
+  // (ctx) => {
+  //   ctx.reply("Could you verify that all the details are correct?",
+  //       Markup.inlineKeyboard([
+  //         Markup.callbackButton("Yes", "YES"),
+  //         Markup.callbackButton("No", "NO")
+  //   ]).extra()
+  //   )
+  // },
   (ctx) => {
+    var correct = ctx.message.text.toLowerCase()
+    if (correct == "no") {
+        ctx.reply("Then you waste my time for what. 😡")
+        ctx.scene.leave()
+        return bot.use(session())
+    } else {
       ctx.reply("Upload successful! Thank you for the report!")
       var report = reportRef.push({
         status: [status],
@@ -111,6 +130,7 @@ const superWizard = new WizardScene('super-wizard',
       });
       reportKey = report.key;
     return ctx.scene.leave()
+    }
   }
 )
 
