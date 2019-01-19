@@ -18,7 +18,7 @@ var reportRef = db.ref("reports");
 var name ='';
 var matric = '';
 var loc = '';
-var problem = '';
+var desc = '';
 
 
 const stepHandler = new Composer()
@@ -71,7 +71,7 @@ const superWizard = new WizardScene('super-wizard',
     return ctx.wizard.next()
   },
   (ctx) => {
-      problem = ctx.message.text
+      desc = ctx.message.text
     ctx.reply('Please attach a photo of the fault')
     //last scene --> leaving the wizard loop
     return ctx.wizard.next()
@@ -81,7 +81,7 @@ const superWizard = new WizardScene('super-wizard',
               "Name: " + name + "\n" +
               "Matriculation number: " + matric + "\n" +
               "Location: " + loc + "\n" +
-              "Description: " + problem),
+              "Description: " + desc),
           Markup.keyboard([
               Markup.callbackButton("Yes"),
               Markup.callbackButton("No")
@@ -91,6 +91,12 @@ const superWizard = new WizardScene('super-wizard',
   },
   (ctx) => {
       ctx.reply("Thank you for the report.")
+      var report = reportRef.push({
+        name: [name],
+        matric: [matric],
+        loc: [loc],
+        desc: [desc]
+      });
     return ctx.scene.leave()
   }
 )
