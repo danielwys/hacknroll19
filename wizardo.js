@@ -23,6 +23,7 @@ var name ='';
 var matric = '';
 var loc = '';
 var desc = '';
+var pic = '';
 
 const stepHandler = new Composer()
 stepHandler.action('next', (ctx) => {
@@ -83,6 +84,8 @@ const superWizard = new WizardScene('super-wizard',
     return ctx.wizard.next()
   },
   (ctx) => {
+      // fault_photo = ctx.message.photo.pop().file_id
+      // fault_photo_id = (ctx.message.photo.pop()['file_id'])
       ctx.reply("Thank you for the report.")
       var report = reportRef.push({
         name: [name],
