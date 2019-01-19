@@ -32,7 +32,7 @@ let reportKey = ''
 
 //will someone explain to me what composer does (should be decide when to move to next step)
 const stepHandler = new Composer()
-stepHandler.action('next', (ctx) => {
+stepHandler.action('next', (ctx) => { //2
       // assignment oprs at every block to store data
       user_ID = ctx.from.id
       ctx.reply('Starting a new report! Please enter your fullname: ')
@@ -41,7 +41,7 @@ stepHandler.action('next', (ctx) => {
 
 const superWizard = new WizardScene('super-wizard',
   //when bot first starts
-  (ctx) => {
+  (ctx) => {  //1
     ctx.reply('Hello! I am NUS Reporting Bot! How can I help you today?', 
     Markup.inlineKeyboard([
       Markup.callbackButton('Report fault', 'next'),
@@ -49,43 +49,30 @@ const superWizard = new WizardScene('super-wizard',
     return ctx.wizard.next()
   },
   stepHandler,
-  // (ctx) => {
-
-  //   return ctx.wizard.next()
-  // },
-  (ctx) => {
+  (ctx) => {  //3
     user_name = ctx.message.text
     ctx.reply('Hello ' + user_name + '! Please enter your matriculation number: ')
     return ctx.wizard.next()
   },
-  (ctx) => {
+  (ctx) => {  //4
     user_matric = ctx.message.text
     ctx.reply('Thanks! Could you please send me a photo of the fault?')
     return ctx.wizard.next()
   },
-  (ctx) => {
+  (ctx) => {  //5
     fault_photo = ctx.message.photo.pop().file_id
     fault_photo_id = (ctx.message.photo.pop()['file_id'])
     ctx.reply('Fault photo saved! Thank you! Could you please describe the fault to me?')
     return ctx.wizard.next()
   },
-  (ctx) => {
+  (ctx) => {  //6
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
         Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).extra()
-
-        // Markup.inlinekeyboard([ //Need to add more locations
-        //     Markup.callbackButton("BIZ"),
-        //     Markup.callbackButton("FASS"),
-        //     Markup.callbackButton("COMPUTING"),
-        //     Markup.callbackButton("MED"),
-        //     Markup.callbackButton("SCI")
-        // ]).oneTime()
-        // .extra()
     )
     return ctx.wizard.next()
   },
-  (ctx) => {
+  (ctx) => {  //7
     fault_loc = ctx.message.text
     ctx.replyWithPhoto(fault_photo,
     {caption: "Alright! Could you verify that all the details are correct?: \n" +
@@ -101,22 +88,13 @@ const superWizard = new WizardScene('super-wizard',
     )
       return ctx.wizard.next()
   },
-
-  // (ctx) => {
-  //   ctx.reply("Could you verify that all the details are correct?",
-  //       Markup.inlineKeyboard([
-  //         Markup.callbackButton("Yes", "YES"),
-  //         Markup.callbackButton("No", "NO")
-  //   ]).extra()
-  //   )
-  // },
-  (ctx) => {
-    var correct = ctx.message.text.toLowerCase()
-    if (correct == "no") {
+  (ctx) => {  //8
+    var correct = ctx.message.text.toLowerCase()  //yes or no response
+    if (correct == "no") {  //8a
         ctx.reply("Then you waste my time for what. 😡")
         ctx.scene.leave()
         return bot.use(session())
-    } else {
+    } else {  //8b
       ctx.reply("Upload successful! Thank you for the report!")
       var report = reportRef.push({
         status: [status],
