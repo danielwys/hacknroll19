@@ -4,9 +4,9 @@ Current Bugs:
 
 1. UnhandledPromiseRejectionWarning: Error: 400: Bad Request: message text is empty (Appears when user interacts with bot, does not affect performance at all)
 
-2. 'Yes' & 'No' inline buttons unable to display (after location selection)
+2. 'Yes' & 'No' inline buttons only able to display with an unprinted 'TEST' string (go and see hard to describe)
 
-3. 'Fault Location' selector does not go away unless the user leaves the bot's page
+3. Inline keyboards still available until the user leaves the bot's page
 
 4. If user is prompted to send photo but sends anything else, bot crashes
 

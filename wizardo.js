@@ -82,11 +82,11 @@ const superWizard = new WizardScene('super-wizard',
               "Matriculation number: " + user_matric + "\n" +
               "Location: " + fault_loc + "\n" +
               "Description: " + fault_desc + "\n\n" +
-              "Please type Yes if correct and No if not."},
-    ctx.reply('', Markup.keyboard([ // BUTTON NO WORK. 
+              "Please select Yes if correct and No if not."},
+    ctx.reply('TEST', Markup.keyboard([ //ADDING THE 'TEST' MAKES THE KEYBOARD WORK. IT IS NOT PRINTED OUT, BUT REMOVING IT BREAKS THE KEYBOARD
                 Markup.callbackButton("Yes"),
                 Markup.callbackButton("No")
-                ]).extra())
+                ]).oneTime().resize().extra())
     )
       return ctx.wizard.next()
   },
