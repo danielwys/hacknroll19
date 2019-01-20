@@ -6,6 +6,8 @@ Current Bugs:
 
 2. 'Yes' & 'No' inline buttons unable to display (after location selection)
 
+3. 'Fault Location' selector does not go away unless the user leaves the bot's page
+
 To-do Functionality:
 
 1. Proper way to initialize bot (eg: /start or /report), right now bot just responds to any input and 'wakes up' ready to file a report
