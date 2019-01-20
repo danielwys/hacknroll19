@@ -70,18 +70,18 @@ const superWizard = new WizardScene('super-wizard',
   (ctx) => {  //6
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
-        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).oneTime().resize().extra() //NEED TO REMOVE BUTTONS AFTER THIS STAGE
+        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).oneTime().resize().extra()
     )
     return ctx.wizard.next()
   },
   (ctx) => {  //7
     fault_loc = ctx.message.text
     ctx.replyWithPhoto(fault_photo,
-    {caption: "Alright! Could you verify that all the details are correct?: \n" +
+    {caption: "Alright! Could you verify that all the details are correct?: \n\n" +
               "Name: " + user_name + "\n" +
               "Matriculation number: " + user_matric + "\n" +
               "Location: " + fault_loc + "\n" +
-              "Description: " + fault_desc + "\n" +
+              "Description: " + fault_desc + "\n\n" +
               "Please type Yes if correct and No if not."},
     ctx.reply('', Markup.keyboard([ // BUTTON NO WORK. 
                 Markup.callbackButton("Yes"),
