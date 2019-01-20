@@ -78,7 +78,7 @@ const superWizard = new WizardScene('super-wizard',
   (ctx) => {  //6
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
-        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).oneTime().resize().extra()
+        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI", "UTOWN"]).oneTime().resize().extra()
     )
     return ctx.wizard.next()
   },
@@ -120,6 +120,17 @@ const superWizard = new WizardScene('super-wizard',
         fault_loc: [fault_loc]
       });
       reportKey = report.key;
+      status = 'Submitted, Awaiting Attention'
+      user_ID = ''
+      user_name = ''
+      user_matric = ''
+      fault_photo = ''
+      fault_photo_id = ''
+      fault_desc = ''
+      fault_loc = ''
+      reportKey = ''
+      corrector = ''
+      reviewer_first = true
     return ctx.scene.leave()
     }
   },
