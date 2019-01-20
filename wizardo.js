@@ -20,6 +20,7 @@ var reportRef = db.ref("reports");
 
 // Program Starts Here
 
+// Initialise variables to be sent in report
 let status = 'Submitted, Awaiting Attention'
 let user_ID = ''
 let user_name = ''
@@ -39,6 +40,7 @@ stepHandler.action('next', (ctx) => { //2
   return ctx.wizard.next()
 })
 
+// WizardScene helps to 'pause' and wait for user input (i think)
 const superWizard = new WizardScene('super-wizard',
   //when bot first starts
   (ctx) => {  //1
@@ -68,7 +70,7 @@ const superWizard = new WizardScene('super-wizard',
   (ctx) => {  //6
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
-        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).extra()
+        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).extra() //NEED TO REMOVE BUTTONS AFTER THIS STAGE
     )
     return ctx.wizard.next()
   },
@@ -81,7 +83,7 @@ const superWizard = new WizardScene('super-wizard',
               "Location: " + fault_loc + "\n" +
               "Description: " + fault_desc + "\n" +
               "Please type Yes if correct and No if not."},
-    Markup.keyboard([ //Need to find way to edit if wrong
+    Markup.keyboard([ // BUTTON NO WORK. 
                 Markup.callbackButton("Yes"),
                 Markup.callbackButton("No")
                 ]).extra()
@@ -89,13 +91,14 @@ const superWizard = new WizardScene('super-wizard',
       return ctx.wizard.next()
   },
   (ctx) => {  //8
-    var correct = ctx.message.text.toLowerCase()  //yes or no response
+    var correct = ctx.message.text.toLowerCase()  //Prompt user to review the report and respond with 'yes' or 'no'
     if (correct == "no") {  //8a
         ctx.reply("Then you waste my time for what. 😡")
         ctx.scene.leave()
         return bot.use(session())
     } else {  //8b
       ctx.reply("Upload successful! Thank you for the report!")
+      // sends the data to firebase
       var report = reportRef.push({
         status: [status],
         user_ID: [user_ID],
@@ -112,6 +115,7 @@ const superWizard = new WizardScene('super-wizard',
   }
 )
 
+// Initialising the bot and middlewares used
 const bot = new Telegraf(process.env.BOT_TOKEN)
 const stage = new Stage([superWizard], { default: 'super-wizard' })
 
