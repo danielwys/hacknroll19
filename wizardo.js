@@ -93,8 +93,8 @@ const superWizard = new WizardScene('super-wizard',
               "Matriculation number: " + user_matric + "\n" +
               "Location: " + fault_loc + "\n" +
               "Description: " + fault_desc + "\n\n" +
-              "Please select Yes if correct and No if not."},
-              Markup.keyboard([ //ADDING THE 'TEST' MAKES THE KEYBOARD WORK. IT IS NOT PRINTED OUT, BUT REMOVING IT BREAKS THE KEYBOARD
+              "Please select Yes if correct and No if not."})
+    ctx.reply('.', Markup.keyboard([ //ADDING THE 'TEST' MAKES THE KEYBOARD WORK. IT IS NOT PRINTED OUT, BUT REMOVING IT BREAKS THE KEYBOARD
                 Markup.callbackButton("Yes"),
                 Markup.callbackButton("No")
                 ]).oneTime().resize().extra())
@@ -132,7 +132,6 @@ const superWizard = new WizardScene('super-wizard',
     switch (corrector) {
         case "Fullname":
             user_name = ctx.message.text
-            ctx.reply(user_name)
             break
         case "Matric No.":
             user_matric = ctx.message.text
@@ -148,7 +147,8 @@ const superWizard = new WizardScene('super-wizard',
             fault_loc = ctx.message.text
             break
     }
-    return ctx.wizard.selectStep(6)
+    ctx.reply('Type "Continue" to proceed')
+    return ctx.wizard.selectStep(6) //NEED TO PRESS ONE MORE RANDOM COMMAND TO REACH REVIEW
   }
 )
 
