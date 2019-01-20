@@ -94,20 +94,19 @@ const superWizard = new WizardScene('super-wizard',
               "Location: " + fault_loc + "\n" +
               "Description: " + fault_desc + "\n\n" +
               "Please select Yes if correct and No if not."},
-    ctx.reply('TEST', Markup.keyboard([ //ADDING THE 'TEST' MAKES THE KEYBOARD WORK. IT IS NOT PRINTED OUT, BUT REMOVING IT BREAKS THE KEYBOARD
+              Markup.keyboard([ //ADDING THE 'TEST' MAKES THE KEYBOARD WORK. IT IS NOT PRINTED OUT, BUT REMOVING IT BREAKS THE KEYBOARD
                 Markup.callbackButton("Yes"),
                 Markup.callbackButton("No")
                 ]).oneTime().resize().extra())
-    )
       return ctx.wizard.next()
   },
   (ctx) => {  //8
-    let correct = ctx.message.text.toLowerCase()  //Prompt user to review the report and respond with 'yes' or 'no'
-    if (correct == "no") {  //8a
+    let answer = ctx.message.text.toLowerCase()  //Prompt user to review the report and respond with 'yes' or 'no'
+    if (answer == "no") {  //8a
         ctx.reply('Okay! Which part did you get wrong?',
             Markup.keyboard(["Fullname", "Matric No.", "Photo", "Fault Description", "Fault Location"]).oneTime().resize().extra())
         return ctx.wizard.next()
-    } else {  //8b
+    } else if (answer == "yes") {  //8b
       ctx.reply("Upload successful! Thank you for the report!")
       // sends the data to firebase
       var report = reportRef.push({
