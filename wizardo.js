@@ -70,7 +70,7 @@ const superWizard = new WizardScene('super-wizard',
   (ctx) => {  //6
     fault_desc = ctx.message.text
     ctx.reply('Oh no, that sounds bad! Could you let me know where the fault is located at?',
-        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).extra() //NEED TO REMOVE BUTTONS AFTER THIS STAGE
+        Markup.keyboard(["BIZ", "COMPUTING", "FASS", "MED", "SCI"]).oneTime().resize().extra() //NEED TO REMOVE BUTTONS AFTER THIS STAGE
     )
     return ctx.wizard.next()
   },
@@ -83,15 +83,15 @@ const superWizard = new WizardScene('super-wizard',
               "Location: " + fault_loc + "\n" +
               "Description: " + fault_desc + "\n" +
               "Please type Yes if correct and No if not."},
-    Markup.keyboard([ // BUTTON NO WORK. 
+    ctx.reply('', Markup.keyboard([ // BUTTON NO WORK. 
                 Markup.callbackButton("Yes"),
                 Markup.callbackButton("No")
-                ]).extra()
+                ]).extra())
     )
       return ctx.wizard.next()
   },
   (ctx) => {  //8
-    var correct = ctx.message.text.toLowerCase()  //Prompt user to review the report and respond with 'yes' or 'no'
+    let correct = ctx.message.text.toLowerCase()  //Prompt user to review the report and respond with 'yes' or 'no'
     if (correct == "no") {  //8a
         ctx.reply("Then you waste my time for what. 😡")
         ctx.scene.leave()
