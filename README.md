@@ -1,5 +1,14 @@
 # hacknroll19
 
+Execution Instructions:
+1. Install node.js and npm with 'sudo apt install nodejs npm'
+
+2. Clone this repository into a folder of your choice
+
+3. In the cloned folder, run 'npm install download firebase-admin fs telegraf'
+
+4. Run the bot with 'node wizardo.js'
+
 Current Bugs:
 
 1. UnhandledPromiseRejectionWarning: Error: 400: Bad Request: message text is empty (Appears when user interacts with bot, does not affect performance at all)
