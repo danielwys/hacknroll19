@@ -8,6 +8,8 @@ Current Bugs:
 
 3. 'Fault Location' selector does not go away unless the user leaves the bot's page
 
+4. If user is prompted to send photo but sends anything else, bot crashes
+
 To-do Functionality:
 
 1. Proper way to initialize bot (eg: /start or /report), right now bot just responds to any input and 'wakes up' ready to file a report
