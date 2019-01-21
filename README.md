@@ -26,3 +26,5 @@ To-do Functionality:
 3. Ability to edit report (right now any mistake made requires the user to re-do the report from the start) (PARTIAL IMPLEMENT)
 
 4. Ability for the user to check the status of his current reports (to see what stage of the repair-work has been completed)
+
+5. Login feature (saves user name and matric for subsequent reports, prompt user at start if he is USER_NAME, MATRIC_NO).
